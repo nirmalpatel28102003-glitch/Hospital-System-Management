@@ -1,0 +1,17 @@
+{
+  "name": "fullstack-hospital-management-system",
+  "version": "1.0.0",
+  "description": "Full-stack hospital management system with Node.js API and persistent JSON storage.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "hospital",
+    "management",
+    "node",
+    "full-stack"
+  ],
+  "author": "",
+  "license": "MIT"
+}

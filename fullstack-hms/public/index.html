@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full-Stack Hospital Management System</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">H+</div>
+        <div>
+          <h1>MediCore HMS</h1>
+          <span>Full-stack hospital system</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main navigation">
+        <button class="active" data-module="dashboard"><span>D</span>Dashboard</button>
+        <button data-module="patients"><span>P</span>Patients</button>
+        <button data-module="appointments"><span>A</span>Appointments</button>
+        <button data-module="doctors"><span>M</span>Doctors</button>
+        <button data-module="billing"><span>B</span>Billing</button>
+        <button data-module="pharmacy"><span>Rx</span>Pharmacy</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <strong>Bed Occupancy</strong>
+        <div class="bed-line"><span>ICU + Ward</span><span id="bedPercent">76%</span></div>
+        <div class="bar"><span id="bedBar"></span></div>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="todayLabel">Today</p>
+          <h2 id="moduleTitle">Clinical Command Center</h2>
+        </div>
+        <div class="actions">
+          <button class="btn danger" id="emergencyBtn">Code Blue</button>
+          <button class="btn primary" id="openPatientModal">Add Patient</button>
+        </div>
+      </header>
+
+      <section class="module active" id="dashboard">
+        <div class="hero">
+          <div class="command-center">
+            <h3>Hospital operations connected to a live backend.</h3>
+            <p>Patients, appointments, doctors, billing, pharmacy stock, and emergency events are served through Node.js APIs with persistent JSON storage.</p>
+            <div class="quick-stats">
+              <div><span>Queue</span><strong id="queueCount">0</strong></div>
+              <div><span>Available Doctors</span><strong id="availableDoctors">0</strong></div>
+              <div><span>Open Bills</span><strong id="openBills">0</strong></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="section-title">
+              <h3>Priority Triage</h3>
+              <span>Live</span>
+            </div>
+            <div class="list" id="triageList"></div>
+          </div>
+        </div>
+
+        <div class="metrics">
+          <article><span>Admitted Patients</span><strong id="metricPatients">0</strong><small>Stored in database</small></article>
+          <article><span>Appointments</span><strong id="metricAppointments">0</strong><small>Today schedule</small></article>
+          <article><span>Low Stock</span><strong id="metricLowStock">0</strong><small>Needs reorder</small></article>
+          <article><span>Revenue</span><strong id="metricRevenue">$0</strong><small>Paid invoices</small></article>
+        </div>
+
+        <div class="grid">
+          <section class="panel span-8">
+            <div class="section-title">
+              <h3>Patient Registry</h3>
+              <span id="patientCountLabel">0 records</span>
+            </div>
+            <div class="toolbar">
+              <input class="field" id="patientSearch" type="search" placeholder="Search patient, doctor, diagnosis" />
+              <select class="field" id="wardFilter">
+                <option value="all">All wards</option>
+                <option>ICU</option>
+                <option>Cardiology</option>
+                <option>Orthopedics</option>
+                <option>Pediatrics</option>
+                <option>General</option>
+              </select>
+              <select class="field" id="statusFilter">
+                <option value="all">All status</option>
+                <option>Critical</option>
+                <option>Stable</option>
+                <option>Review</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Patient</th>
+                    <th>Ward</th>
+                    <th>Doctor</th>
+                    <th>Diagnosis</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="patientRows"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="panel span-4">
+            <div class="section-title">
+              <h3>Appointments</h3>
+              <span>Today</span>
+            </div>
+            <div class="list" id="appointmentList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="module" id="patients">
+        <div class="panel">
+          <div class="section-title">
+            <h3>Patients</h3>
+            <span id="patientModuleCount">0 total</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Ward</th>
+                  <th>Doctor</th>
+                  <th>Diagnosis</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="patientRowsMirror"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="appointments">
+        <div class="grid">
+          <div class="panel span-8">
+            <div class="section-title">
+              <h3>Schedule</h3>
+              <span>API backed</span>
+            </div>
+            <div class="list" id="appointmentListFull"></div>
+          </div>
+          <div class="panel span-4">
+            <div class="section-title">
+              <h3>Book Visit</h3>
+              <span>New</span>
+            </div>
+            <form class="form-grid" id="appointmentForm">
+              <label class="full">Patient
+                <input class="field" name="patient" required placeholder="Patient name" />
+              </label>
+              <label>Department
+                <select class="field" name="department">
+                  <option>Cardiology</option>
+                  <option>Neurology</option>
+                  <option>Orthopedics</option>
+                  <option>Pediatrics</option>
+                  <option>General</option>
+                </select>
+              </label>
+              <label>Time
+                <input class="field" name="time" required type="time" />
+              </label>
+              <button class="btn primary full" type="submit">Book Appointment</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="doctors">
+        <div class="panel">
+          <div class="section-title">
+            <h3>Doctor Roster</h3>
+            <span>Live API</span>
+          </div>
+          <div class="list" id="doctorList"></div>
+        </div>
+      </section>
+
+      <section class="module" id="billing">
+        <div class="panel">
+          <div class="section-title">
+            <h3>Billing</h3>
+            <span>Invoices</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Invoice</th>
+                  <th>Patient</th>
+                  <th>Service</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="billingRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="pharmacy">
+        <div class="panel">
+          <div class="section-title">
+            <h3>Pharmacy Stock</h3>
+            <span>Inventory</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Medicine</th>
+                  <th>Category</th>
+                  <th>Stock</th>
+                  <th>Reorder</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="pharmacyRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="patientModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="patientModalTitle">
+      <div class="modal-head">
+        <h3 id="patientModalTitle">Add Patient</h3>
+        <button class="close" id="closePatientModal" aria-label="Close">X</button>
+      </div>
+      <form class="form-grid" id="patientForm">
+        <label>Name
+          <input class="field" name="name" required placeholder="Patient name" />
+        </label>
+        <label>Age
+          <input class="field" name="age" required type="number" min="0" max="120" placeholder="42" />
+        </label>
+        <label>Ward
+          <select class="field" name="ward">
+            <option>ICU</option>
+            <option>Cardiology</option>
+            <option>Orthopedics</option>
+            <option>Pediatrics</option>
+            <option>General</option>
+          </select>
+        </label>
+        <label>Status
+          <select class="field" name="status">
+            <option>Stable</option>
+            <option>Review</option>
+            <option>Critical</option>
+          </select>
+        </label>
+        <label>Doctor
+          <input class="field" name="doctor" required placeholder="Dr. Name" />
+        </label>
+        <label>Diagnosis
+          <input class="field" name="diagnosis" required placeholder="Diagnosis" />
+        </label>
+        <label class="full">Notes
+          <textarea class="field" name="notes" placeholder="Clinical notes"></textarea>
+        </label>
+        <button class="btn primary full" type="submit">Save Patient</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

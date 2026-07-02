@@ -1,0 +1,164 @@
+{
+  "patients": [
+    {
+      "id": 1,
+      "name": "Aarav Mehta",
+      "age": 54,
+      "ward": "Cardiology",
+      "doctor": "Dr. R. Sharma",
+      "diagnosis": "Arrhythmia",
+      "status": "Review",
+      "notes": "Observation and ECG review."
+    },
+    {
+      "id": 2,
+      "name": "Maya Kapoor",
+      "age": 31,
+      "ward": "ICU",
+      "doctor": "Dr. Anita Rao",
+      "diagnosis": "Sepsis",
+      "status": "Critical",
+      "notes": "Broad-spectrum antibiotics started."
+    },
+    {
+      "id": 3,
+      "name": "Owen Lewis",
+      "age": 42,
+      "ward": "Orthopedics",
+      "doctor": "Dr. Sameer Khan",
+      "diagnosis": "Femur fracture",
+      "status": "Stable",
+      "notes": "Post-op vitals normal."
+    },
+    {
+      "id": 4,
+      "name": "Nisha Verma",
+      "age": 9,
+      "ward": "Pediatrics",
+      "doctor": "Dr. Lena Paul",
+      "diagnosis": "Asthma",
+      "status": "Stable",
+      "notes": "Nebulization complete."
+    }
+  ],
+  "appointments": [
+    {
+      "id": 1,
+      "time": "09:20",
+      "patient": "Rohan Nair",
+      "department": "Neurology",
+      "doctor": "Dr. N. Iyer",
+      "status": "Checked in"
+    },
+    {
+      "id": 2,
+      "time": "10:00",
+      "patient": "Fatima Ali",
+      "department": "Cardiology",
+      "doctor": "Dr. R. Sharma",
+      "status": "Waiting"
+    },
+    {
+      "id": 3,
+      "time": "11:30",
+      "patient": "Meera Das",
+      "department": "Pediatrics",
+      "doctor": "Dr. Lena Paul",
+      "status": "Confirmed"
+    }
+  ],
+  "doctors": [
+    {
+      "id": 1,
+      "name": "Dr. Anita Rao",
+      "specialty": "Emergency Medicine",
+      "room": "ICU-2",
+      "status": "In procedure"
+    },
+    {
+      "id": 2,
+      "name": "Dr. R. Sharma",
+      "specialty": "Cardiology",
+      "room": "C-104",
+      "status": "Available"
+    },
+    {
+      "id": 3,
+      "name": "Dr. Sameer Khan",
+      "specialty": "Orthopedics",
+      "room": "O-210",
+      "status": "Rounds"
+    },
+    {
+      "id": 4,
+      "name": "Dr. Lena Paul",
+      "specialty": "Pediatrics",
+      "room": "P-011",
+      "status": "Available"
+    },
+    {
+      "id": 5,
+      "name": "Dr. N. Iyer",
+      "specialty": "Neurology",
+      "room": "N-308",
+      "status": "Consulting"
+    }
+  ],
+  "billing": [
+    {
+      "id": 1,
+      "invoice": "INV-2301",
+      "patient": "Aarav Mehta",
+      "service": "Cardiac observation",
+      "amount": 2840,
+      "status": "Pending"
+    },
+    {
+      "id": 2,
+      "invoice": "INV-2302",
+      "patient": "Maya Kapoor",
+      "service": "ICU care",
+      "amount": 6720,
+      "status": "Insurance"
+    },
+    {
+      "id": 3,
+      "invoice": "INV-2303",
+      "patient": "Owen Lewis",
+      "service": "Surgery package",
+      "amount": 4180,
+      "status": "Paid"
+    }
+  ],
+  "pharmacy": [
+    {
+      "id": 1,
+      "name": "Amoxicillin",
+      "category": "Antibiotic",
+      "stock": 218,
+      "reorder": 80
+    },
+    {
+      "id": 2,
+      "name": "Insulin Glargine",
+      "category": "Endocrine",
+      "stock": 46,
+      "reorder": 60
+    },
+    {
+      "id": 3,
+      "name": "Salbutamol",
+      "category": "Respiratory",
+      "stock": 134,
+      "reorder": 50
+    },
+    {
+      "id": 4,
+      "name": "Atorvastatin",
+      "category": "Cardiac",
+      "stock": 79,
+      "reorder": 90
+    }
+  ],
+  "emergencies": []
+}
